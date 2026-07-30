@@ -191,7 +191,6 @@ export function OrcamentoForm({
       let clienteId = data.cliente_id || null
       const clientePayload = {
         nome: data.cliente_nome,
-        telefone: data.cliente_telefone || null,
         whatsapp: data.cliente_whatsapp || null,
         email: data.cliente_email || null,
         cep: data.cliente_cep || null,
