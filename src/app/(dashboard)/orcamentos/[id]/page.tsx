@@ -105,12 +105,12 @@ export default async function VisualizarOrcamentoPage({
             </div>
           </div>
 
-          <div className="text-left sm:text-right">
-            <div className="flex items-center sm:justify-end gap-2 mb-1 flex-wrap">
-              <span className="font-mono text-xl font-bold text-[#303030]">{p.numero_pedido}</span>
+          <div className="text-left sm:text-right flex flex-col items-start sm:items-end gap-1">
+            <div className="flex items-center gap-2 mb-1">
               <Badge variant={p.status === 'confirmado' ? 'success' : p.status === 'cancelado' ? 'destructive' : 'secondary'}>
                 {statusLabel[p.status]}
               </Badge>
+              <span className="font-mono text-xl font-bold text-[#303030]">{p.numero_pedido}</span>
             </div>
             <p className="text-sm text-gray-500">
               Emissão: <strong className="text-[#303030]">{formatDate(p.data_emissao)}</strong>

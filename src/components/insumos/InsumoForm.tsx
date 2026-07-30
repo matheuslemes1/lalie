@@ -145,7 +145,7 @@ export function InsumoForm({ open, onClose, onSuccess, insumo }: InsumoFormProps
           </div>
 
           {/* Categoria + Unidade */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <Label htmlFor="insumo-categoria">Categoria *</Label>
               <Select
@@ -185,7 +185,7 @@ export function InsumoForm({ open, onClose, onSuccess, insumo }: InsumoFormProps
           </div>
 
           {/* Quantidade + Custo Unitário */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <Label htmlFor="insumo-quantidade">Quantidade *</Label>
               <Input

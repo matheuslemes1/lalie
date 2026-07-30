@@ -147,7 +147,7 @@ export function ProdutoForm({ open, onClose, onSuccess, produto }: ProdutoFormPr
           </div>
 
           {/* Categoria + Unidade */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <Label htmlFor="produto-categoria">Categoria *</Label>
               <Select
@@ -202,7 +202,7 @@ export function ProdutoForm({ open, onClose, onSuccess, produto }: ProdutoFormPr
               {errors.custo_producao && <p className="text-xs text-red-500">{errors.custo_producao.message}</p>}
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <Label htmlFor="produto-conv">Valor Convencional (R$) *</Label>
                 <Input
@@ -229,7 +229,7 @@ export function ProdutoForm({ open, onClose, onSuccess, produto }: ProdutoFormPr
             </div>
 
             {/* Preview de margens */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-[#90323D]/5 border border-[#90323D]/15 rounded-lg px-3 py-2">
                 <p className="text-xs text-gray-500">Margem Convencional</p>
                 <p className="font-bold text-[#90323D]">

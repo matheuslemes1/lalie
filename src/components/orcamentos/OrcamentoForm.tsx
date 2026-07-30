@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Produto, Cliente, TipoPreco, Pedido, ItemPedido } from '@/lib/types'
-import { formatCurrency, todayISO, cleanCEP } from '@/lib/utils'
+import { formatCurrency, todayISO, cleanCEP, formatPhone } from '@/lib/utils'
 import { buscarEnderecoPorCEP } from '@/lib/viacep'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -44,7 +44,6 @@ const schema = z.object({
   // Cliente
   cliente_id: z.string().optional(),
   cliente_nome: z.string().min(2, 'Nome do cliente obrigatório'),
-  cliente_telefone: z.string().optional(),
   cliente_whatsapp: z.string().optional(),
   cliente_email: z.string().optional(),
   cliente_cep: z.string().optional(),
@@ -100,11 +99,9 @@ export function OrcamentoForm({
       data_envio: pedido?.data_envio ?? '',
       status: pedido?.status ?? 'rascunho',
       informacoes_adicionais: pedido?.informacoes_adicionais ?? '',
-      cliente_id: pedido?.cliente_id ?? '',
       cliente_nome: pedido?.cliente_nome_snapshot ?? '',
-      cliente_telefone: '',
-      cliente_whatsapp: '',
-      cliente_email: '',
+      cliente_whatsapp: pedido?.cliente_id ? undefined : '',
+      cliente_email: pedido?.cliente_id ? undefined : '',
       cliente_cep: '',
       cliente_logradouro: '',
       cliente_numero: '',
@@ -278,7 +275,7 @@ export function OrcamentoForm({
         <h2 className="text-base font-semibold text-[#303030] mb-4 pb-2 border-b border-gray-100">
           Cabeçalho do Pedido
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="space-y-1.5">
             <Label htmlFor="orcamento-numero">Nº do Pedido *</Label>
             <Input id="orcamento-numero" {...register('numero_pedido')} />
@@ -370,15 +367,18 @@ export function OrcamentoForm({
 
           <div className="space-y-1.5">
             <Label htmlFor="cliente-whatsapp">WhatsApp</Label>
-            <Input id="cliente-whatsapp" placeholder="(00) 00000-0000" {...register('cliente_whatsapp')} />
+            <Input 
+              id="cliente-whatsapp" 
+              placeholder="(00) 00000-0000" 
+              {...register('cliente_whatsapp')} 
+              onChange={(e) => {
+                e.target.value = formatPhone(e.target.value)
+                setValue('cliente_whatsapp', e.target.value)
+              }}
+            />
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="cliente-telefone">Telefone</Label>
-            <Input id="cliente-telefone" placeholder="(00) 0000-0000" {...register('cliente_telefone')} />
-          </div>
-
-          <div className="space-y-1.5 sm:col-span-2">
             <Label htmlFor="cliente-email">E-mail</Label>
             <Input id="cliente-email" type="email" placeholder="email@exemplo.com" {...register('cliente_email')} />
           </div>
@@ -475,13 +475,16 @@ export function OrcamentoForm({
             return (
               <div
                 key={field.id}
-                className="border border-gray-100 rounded-lg p-4 bg-gray-50/50 space-y-3 relative"
+                className="border border-gray-100 rounded-lg p-4 bg-gray-50/50 space-y-3"
               >
-                <div className="absolute top-3 right-3">
+                <div className="flex justify-between items-center -mt-1 -mb-1">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                    Item {index + 1}
+                  </span>
                   <button
                     type="button"
                     onClick={() => remove(index)}
-                    className="p-1.5 rounded text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                    className="p-1.5 -mr-1.5 rounded text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors"
                     aria-label="Remover item"
                     disabled={fields.length === 1}
                   >
@@ -489,7 +492,7 @@ export function OrcamentoForm({
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pr-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   {/* Produto — full width no mobile */}
                   <div className="space-y-1.5 sm:col-span-2 lg:col-span-2">
                     <Label htmlFor={`item-produto-${index}`}>Produto *</Label>

@@ -99,6 +99,16 @@ a {
   background: #90323d;
 }
 
+/* ─── Correção para Inputs de Data (WebKit) ──────────────────── */
+input[type="date"] {
+  position: relative;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 0.75rem; /* ~12px (mesmo padding do .px-3) */
+  cursor: pointer;
+}
+
 /* ─── Utilitários ────────────────────────────────────────────── */
 .animate-fade-in {
   animation: fade-in 0.25s ease-out both;
