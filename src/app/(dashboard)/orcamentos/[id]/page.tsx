@@ -233,7 +233,8 @@ export default async function VisualizarOrcamentoPage({
             Este documento é um orçamento e não tem valor fiscal.
           </p>
         </footer>
-      </div>
+      </div> {/* fim print-container */}
+      </div> {/* fim overflow-x-auto */}
     </div>
   )
 }
