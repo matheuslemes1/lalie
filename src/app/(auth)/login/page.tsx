@@ -47,7 +47,7 @@ export default function LoginPage() {
         <div className="bg-white rounded-2xl shadow-2xl p-8 animate-fade-in">
           {/* Logo */}
           <div className="text-center mb-8">
-            <img src="/logo.jpeg" alt="Laliê Papelaria" className="h-16 w-auto" />
+            <img src="/logo.jpeg" alt="Laliê Papelaria" className="h-16 w-auto mx-auto mb-2" />
             <h1 className="text-2xl font-bold text-[#303030]">Laliê Papelaria</h1>
             <p className="text-sm text-gray-500 mt-1">Painel Administrativo</p>
           </div>
