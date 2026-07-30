@@ -87,10 +87,11 @@ export default async function VisualizarOrcamentoPage({
       </div>
 
       {/* ── DOCUMENTO DO ORÇAMENTO ──────────────────────────────── */}
-      <div className="print-container bg-white rounded-xl shadow-sm border border-gray-100 p-5 sm:p-8 lg:p-12 max-w-4xl mx-auto">
+      <div className="overflow-x-auto pb-4">
+        <div className="print-container bg-white rounded-xl shadow-sm border border-gray-100 p-8 lg:p-12 max-w-4xl mx-auto min-w-[700px]">
 
-        {/* Cabeçalho */}
-        <header className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-6 border-b-2 border-[#90323D]">
+          {/* Cabeçalho */}
+          <header className="flex flex-row items-start justify-between gap-4 pb-6 border-b-2 border-[#90323D]">
           <div className="flex items-center gap-3">
             {/*
               Substitua por <img src="/logo.png" alt="Laliê Papelaria" className="h-14 w-auto" />
@@ -105,7 +106,7 @@ export default async function VisualizarOrcamentoPage({
             </div>
           </div>
 
-          <div className="text-left sm:text-right flex flex-col items-start sm:items-end gap-1">
+          <div className="text-right flex flex-col items-end gap-1">
             <div className="flex items-center gap-2 mb-1">
               <Badge variant={p.status === 'confirmado' ? 'success' : p.status === 'cancelado' ? 'destructive' : 'secondary'}>
                 {statusLabel[p.status]}
@@ -136,12 +137,12 @@ export default async function VisualizarOrcamentoPage({
           <div className="bg-gray-50 rounded-lg p-4">
             <p className="text-base font-semibold text-[#303030]">{p.cliente_nome_snapshot}</p>
             {cliente && (
-              <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-1 text-sm text-gray-600">
+              <div className="mt-2 grid grid-cols-2 gap-1 text-sm text-gray-600">
                 {cliente.whatsapp && <p>📱 WhatsApp: {cliente.whatsapp}</p>}
                 {cliente.telefone && <p>📞 Tel: {cliente.telefone}</p>}
                 {cliente.email && <p>✉️ {cliente.email}</p>}
                 {cliente.logradouro && (
-                  <p className="sm:col-span-2">
+                  <p className="col-span-2">
                     📍 {cliente.logradouro}{cliente.numero ? `, ${cliente.numero}` : ''}
                     {cliente.complemento ? ` — ${cliente.complemento}` : ''}
                     {cliente.bairro ? `, ${cliente.bairro}` : ''}
@@ -161,12 +162,11 @@ export default async function VisualizarOrcamentoPage({
             Itens do Pedido
           </h2>
 
-          {/* Tabela — desktop */}
-          <div className="hidden sm:block overflow-x-auto rounded-lg border border-gray-200">
+          {/* Tabela de itens — Sempre desktop para PDF */}
+          <div className="block overflow-hidden rounded-lg border border-gray-200">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-[#90323D]">
-                  {/* text-white explícito em cada th — garante contraste mesmo com herança CSS */}
                   <th className="text-left px-4 py-3 font-semibold text-white">Produto</th>
                   <th className="text-center px-4 py-3 font-semibold text-white">Tipo</th>
                   <th className="text-right px-4 py-3 font-semibold text-white">Qtd</th>
@@ -210,39 +210,6 @@ export default async function VisualizarOrcamentoPage({
               </tfoot>
             </table>
           </div>
-
-          {/* Cards de itens — mobile */}
-          <div className="sm:hidden space-y-3">
-            {itensList.map((item) => (
-              <div key={item.id} className="bg-gray-50 rounded-lg p-4 border border-gray-100">
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <p className="font-semibold text-[#303030] text-sm leading-snug flex-1">
-                    {item.produto_nome_snapshot}
-                  </p>
-                  <Badge variant={item.tipo_preco === 'atacado' ? 'coral' : 'secondary'} className="flex-shrink-0 text-xs">
-                    {item.tipo_preco === 'atacado' ? 'Atacado' : 'Conv.'}
-                  </Badge>
-                </div>
-                {item.observacao_item && (
-                  <p className="text-xs text-gray-500 italic mb-2">{item.observacao_item}</p>
-                )}
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-500">
-                    {item.quantidade} × {formatCurrency(item.preco_unitario)}
-                  </span>
-                  <span className="font-bold text-[#90323D]">
-                    {formatCurrency(item.subtotal)}
-                  </span>
-                </div>
-              </div>
-            ))}
-
-            {/* Total mobile */}
-            <div className="bg-[#90323D] text-white rounded-lg px-4 py-3 flex items-center justify-between">
-              <span className="font-semibold text-white">TOTAL GERAL</span>
-              <span className="text-xl font-bold text-white">{formatCurrency(p.total_geral)}</span>
-            </div>
-          </div>
         </section>
 
         {/* Informações adicionais */}
@@ -252,7 +219,7 @@ export default async function VisualizarOrcamentoPage({
               Informações Adicionais / Personalização
             </h2>
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-              <p className="text-sm text-[#303030] whitespace-pre-wrap">{p.informacoes_adicionais}</p>
+              <p className="text-sm text-gray-600 whitespace-pre-wrap">{p.informacoes_adicionais}</p>
             </div>
           </section>
         )}
