@@ -149,7 +149,6 @@ export function OrcamentoForm({
   function handleSelectCliente(cliente: Cliente) {
     setValue('cliente_id', cliente.id)
     setValue('cliente_nome', cliente.nome)
-    setValue('cliente_telefone', cliente.telefone ?? '')
     setValue('cliente_whatsapp', cliente.whatsapp ?? '')
     setValue('cliente_email', cliente.email ?? '')
     setValue('cliente_cep', cliente.cep ?? '')
